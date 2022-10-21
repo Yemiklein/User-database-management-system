@@ -1,10 +1,14 @@
 //importing modules
 const bcrypt = require("bcrypt");
-const db = require("../Models");
+const db = require("../config/db.config");
 const jwt = require("jsonwebtoken");
+const groupModel = require("../Models/groupModel");
+//  const Group = require("../models/groupModel");
+// const groupModel = require("../models/groupModel");
 
 // Assigning users to the variable User
 const User = db.users;
+const Group = db.groups;
 
 //signing a user up
 //hashing users password before its saved to the database with bcrypt
@@ -85,7 +89,11 @@ const { email, password } = req.body;
 // find a user by their id
 const findUser = async (req, res) => {
     try {
-        const user = await User.findOne({ where: { id: req.params.id } });
+        const user = await User.findOne({ where: { id: req.params.id },include: [
+            { model: Group, 
+                as:"Group"  // load all pictures
+            },
+          ] });
         if (user) {
             return res.status(200).send(user);
         } else {
@@ -129,6 +137,39 @@ const deleteUser = async (req, res) => {
     }
 };
 
+const regGroup = async (req, res) => {
+    try {
+        
+        const token = req.cookies.jwt;
+console.log(token)
+const decoded = jwt.verify(token, process.env.secretKey)
+console.log(decoded)
+
+        const { mavericks, peer,sqaud } = req.body;
+   const data = { 
+    mavericks, peer,sqaud 
+   };
+   //saving the user
+    const group = await Group.create(data);
+//    const record = await groupModel.create(data);
+
+   console.log(group)
+        
+        
+        // const user = await Group.findOne({ where: { id: req.params.id },include: [
+        //     { model: Group, 
+        //         as:"Group"  // load all pictures
+        //     },
+        //   ] });
+        if (record) {
+            return res.status(200).send(record);
+        } else {
+            return res.status(404).send("User not found");
+        }
+    } catch (error) {
+        console.log(error);
+    }
+};
 
 
 
@@ -139,6 +180,7 @@ module.exports = {
  findUser,
 deleteUser,
     findAllUsers,
+    regGroup
 };
 
 

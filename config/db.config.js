@@ -18,7 +18,8 @@ const sequelize = new Sequelize(`postgres://postgres:123456@localhost:8080/dev`,
     db.sequelize = sequelize
 
 //connecting to model
-db.users = require('./userModel') (sequelize, DataTypes)
+db.users = require('../Models/userModel') (sequelize, DataTypes)
+db.groups = require('../Models/groupModel') (sequelize, DataTypes)
 
 //exporting the module
 module.exports = db

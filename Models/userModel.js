@@ -1,24 +1,3 @@
-//user model
-// module.exports = (sequelize, DataTypes) => {
-//     const User = sequelize.define( "user", {
-//         userName: {
-//             type: DataTypes.STRING,
-//             allowNull: false
-//         },
-//         email: {
-//             type: DataTypes.STRING,
-//             unique: true,
-//             isEmail: true, //checks for email format
-//             allowNull: false
-//         },
-//         password: {
-//             type: DataTypes.STRING,
-//             allowNull: false
-//         },
-//     }, {timestamps: true}, )
-//     return User
-//  }
-
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     "User",
@@ -59,5 +38,40 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: true,
     }
   );
+
+  User.associate = function(models) {
+    User.hasMany(models.Group, { foreignKey: "groupId"});
+    Group.belongsTo(models.User);
+    User.hasMany(models.Role, { foreignKey: "roleId"});
+    Role.belongsTo(models.User);
+  }
+
+
+
   return User;
 };
+
+// User.hasMany(Group, { foreignKey: "groupId" });
+// Group.belongsTo(User, { foreignKey: "userId" });
+// User.hasMany(Role, { foreignKey: "roleId" });
+// Role.belongsTo(User, { foreignKey: "userId" });
+
+
+// module.exports = (sequelize, DataTypes) => {
+//     const UserTask = sequelize.define('UserTask', {
+//           userId: DataTypes.INTEGER,
+//           taskId: DataTypes.INTEGER
+//     }, {});
+  
+//     UserTask.associate = function(models) {
+//       UserTask.hasMany(models.Task, {
+//           foreignKey : 'id',
+//           sourceKey: 'taskId'
+//       });
+//       UserTask.hasMany(models.User, {
+//           foreignKey : 'id',
+//           sourceKey: 'userId'
+//       })
+//     };
+//     return UserTask;
+//   };

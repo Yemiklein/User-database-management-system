@@ -1,7 +1,7 @@
 //importing modules
 const express = require('express')
 const userController = require('../Controllers/userController')
-const { signup, login, findUser, deleteUser, findAllUsers } = userController
+const { signup, login, findUser, deleteUser, findAllUsers, regGroup} = userController
 const userAuth = require('../Middlewares/userAuth')
 
 const router = express.Router()
@@ -21,5 +21,8 @@ router.delete('/deleteUser/:id', deleteUser)
 
 //findAllUsers route
 router.get('/findAllUsers', findAllUsers)
+
+
+router.post('/add-group',  regGroup)
 
 module.exports = router

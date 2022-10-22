@@ -1,9 +1,7 @@
-
 const  express = require("express");
 const  jwt = require ("jsonwebtoken");
 const secret = process.env.JWT_SECRET;
 const db = require("../config/db.config");
-// import { UserInstance } from "../model/user";
 
 const User=db.users;
 const user_Auth = async function auth(
@@ -16,8 +14,6 @@ const user_Auth = async function auth(
 
     const auth =
        req.headers.authorization;
-    //    console.log(auth)
-      //req.cookies.authorization;
     if (!auth) {
       res.status(401).json({
         Error: "Kindly login from the login page",
@@ -29,7 +25,7 @@ const user_Auth = async function auth(
 
     if (!verified) {
       return res.status(401).json({
-        Error: "Verification failed, access denied",
+        Error: "Verification failed, access denied, kindly check your login details ",
       });
     }
     const { id } = verified;
@@ -51,7 +47,7 @@ const user_Auth = async function auth(
 
     res.status(403).json({
       error,
-      Error: "You are not logged in",
+      Error: "You are not logged in, kindly login",
     });
   }
 }

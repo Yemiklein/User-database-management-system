@@ -38,8 +38,6 @@ const db = require("../config/db.config");
 };
 
 
-
-
 //exporting module
  module.exports = {
  saveUser,

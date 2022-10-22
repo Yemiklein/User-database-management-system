@@ -1,6 +1,3 @@
-
-
-//importing modules
 const express = require('express')
 const sequelize = require('sequelize')
 const dotenv = require('dotenv').config()
@@ -22,7 +19,7 @@ app.use(cookieParser())
 //synchronizing the database and forcing it to false so we dont lose data
 
 db.sequelize.sync().then(() => {
-    console.log('Database connected')
+    console.log('Database connected 🎊')
    
 });
     //routes for the user API

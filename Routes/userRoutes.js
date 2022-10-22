@@ -2,13 +2,15 @@
 const express = require('express')
 const userController = require('../Controllers/userController')
 const { signup, login, findUser, deleteUser, findAllUsers, regGroup} = userController
-const userAuth = require('../Middlewares/userAuth')
+// const userAuth = require('../Middlewares/userAuth')
+const auth = require('../Middlewares/auth')
+
 
 const router = express.Router()
 
 //signup endpoint
 //passing the middleware function to the signup
-router.post('/signup', userAuth.saveUser, signup)
+router.post('/signup', signup)
 
 //login route
 router.post('/login', login )
@@ -23,6 +25,6 @@ router.delete('/deleteUser/:id', deleteUser)
 router.get('/findAllUsers', findAllUsers)
 
 
-router.post('/add-group',  regGroup)
+router.post('/add-group',auth.user_Auth, regGroup)
 
 module.exports = router

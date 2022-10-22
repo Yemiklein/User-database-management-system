@@ -29,20 +29,23 @@ const signup = async (req, res) => {
    //generate token with the user's id and the secretKey in the env file
    // set cookie with the token generated
    if (user) {
-     let token = jwt.sign({ id: user.id }, process.env.secretKey, {
+     let token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
        expiresIn: 1 * 24 * 60 * 60 * 1000,
      });
 
-     res.cookie("jwt", token, { maxAge: 1 * 24 * 60 * 60, httpOnly: true });
+     //res.cookie("jwt", token, { maxAge: 1 * 24 * 60 * 60, httpOnly: true });
      console.log("user", JSON.stringify(user, null, 2));
      console.log(token);
      //send users details
-     return res.status(201).send(user);
+     return res.status(201).json({user});
    } else {
-     return res.status(409).send("Details are not correct");
+     return res.status(409).json({msg:"Details are not correct"});
    }
  } catch (error) {
-   console.log(error);
+  return res.status(500).send({ error: error.message,
+    status:"failed",
+    msg:"User registration failed"
+});
  }
 };
 
@@ -64,17 +67,17 @@ const { email, password } = req.body;
       //generate token with the user's id and the secretKey in the env file
 
      if (isSame) {
-       let token = jwt.sign({ id: user.id }, process.env.secretKey, {
+       
+       let token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
          expiresIn: 1 * 24 * 60 * 60 * 1000,
        });
-
+console.log(token)
        //if password matches wit the one in the database
        //go ahead and generate a cookie for the user
-       res.cookie("jwt", token, { maxAge: 1 * 24 * 60 * 60, httpOnly: true });
-       console.log("user", JSON.stringify(user, null, 2));
-       console.log(token);
+       
        //send user data
-       return res.status(201).send(user);
+       return res.status(201).json({msg:"login successful", user, token});
+    //    return res.status(201).send(user);
      } else {
        return res.status(401).send("Authentication failed");
      }
@@ -137,23 +140,28 @@ const deleteUser = async (req, res) => {
     }
 };
 
-const regGroup = async (req, res) => {
+const regGroup = async function (req, res) {
     try {
         
-        const token = req.cookies.jwt;
-console.log(token)
-const decoded = jwt.verify(token, process.env.secretKey)
-console.log(decoded)
+        const auth = req.headers.authorization
 
-        const { mavericks, peer,sqaud } = req.body;
-   const data = { 
-    mavericks, peer,sqaud 
-   };
+        const token = auth?.slice(7, auth.length);
+
+ const decoded = jwt.verify(token, process.env.JWT_SECRET)
+ 
+ const userId=decoded.id;
+ console.log(userId)
+
+
+
+        const { mavericks, peer,squad } = req.body;
+   const data = { userId,mavericks, peer,squad };
    //saving the user
     const group = await Group.create(data);
+    console.log("yessssss")
 //    const record = await groupModel.create(data);
 
-   console.log(group)
+  
         
         
         // const user = await Group.findOne({ where: { id: req.params.id },include: [
@@ -161,8 +169,8 @@ console.log(decoded)
         //         as:"Group"  // load all pictures
         //     },
         //   ] });
-        if (record) {
-            return res.status(200).send(record);
+        if (group) {
+            return res.status(200).send(group);
         } else {
             return res.status(404).send("User not found");
         }

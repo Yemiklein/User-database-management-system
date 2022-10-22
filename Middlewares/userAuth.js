@@ -20,17 +20,17 @@ const db = require("../config/db.config");
    }
 
    //checking if email already exist
-   const emailcheck = await User.findOne({
+   const authUser = await User.findOne({
      where: {
        email: req.body.email,
      },
    });
 
    //if email exist in the database respond with a status of 409
-   if (emailcheck) {
-     return res.json(409).send("Authentication failed");
+   if (!authUser) {
+     return res.json(401).json({msg:"Authentication failed"});
    }
-
+     req.user=authUser
    next();
  } catch (error) {
    console.log(error);
@@ -44,3 +44,4 @@ const db = require("../config/db.config");
  module.exports = {
  saveUser,
 };
+

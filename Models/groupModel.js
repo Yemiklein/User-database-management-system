@@ -4,12 +4,13 @@ module.exports = (sequelize, DataTypes) => {
       {
         groupId: {
           type: DataTypes.UUID,
+          defaultValue: DataTypes.UUIDV4,
           primaryKey: true,
         },
         userId: {
           type: DataTypes.STRING,
             allowNull: false,
-          primaryKey: true,
+          foreignKey: true,
         },
         peer: {
           type: DataTypes.STRING,

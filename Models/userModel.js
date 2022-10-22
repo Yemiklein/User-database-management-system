@@ -10,12 +10,12 @@ module.exports = (sequelize, DataTypes) => {
       firstName: {
         type: DataTypes.STRING,
         allowNull: true,
-        defaultValue: "John",
+        
       },
       lastName: {
         type: DataTypes.STRING,
         allowNull: true,
-        defaultValue: "Doe",
+     
       },
       userName: {
         type: DataTypes.STRING,

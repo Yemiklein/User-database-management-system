@@ -2,13 +2,13 @@
 const bcrypt = require("bcrypt");
 const db = require("../config/db.config");
 const jwt = require("jsonwebtoken");
-const groupModel = require("../Models/groupModel");
-const roleModel = require("../Models/roleModel");
+// const groupModel = require("../Models/groupModel");
+// const roleModel = require("../Models/roleModel");
 
 // Assigning users to the variable User
 const User = db.users;
-const Group = db.groups;
-const Role = db.roles;
+// const Group = db.groups;
+// const Role = db.roles;
 
 //signing a user up
 //hashing users password before its saved to the database with bcrypt
@@ -58,7 +58,7 @@ const login = async (req, res) => {
     const { email, password } = req.body;
 
     //find a user by their email
-    const user = await User.findOne({ email });
+    const user = await User.findOne({where: {email}});
 
     //if user email is found, compare password with bcrypt
     if (user) {
@@ -71,8 +71,8 @@ const login = async (req, res) => {
         let token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
           expiresIn: 1 * 24 * 60 * 60 * 1000,
         });
-        console.log(token);
-        //if password matches wit the one in the database
+        
+        //if password matches with the one in the database
         //go ahead and generate a cookie for the user
 
         //send user data
@@ -81,13 +81,13 @@ const login = async (req, res) => {
       } else {
         return res.status(401).send("Authentication failed");
       }
-    } else {
-      return res.status(401).send("Authentication failed");
     }
   } catch (error) {
     console.log(error);
   }
 };
+
+
 
 // find a user by their id
 const findUser = async (req, res) => {
@@ -97,7 +97,7 @@ const findUser = async (req, res) => {
       include: [
         {
           model: Group,
-          as: "Group", // load all pictures
+          as: "Group", 
         },
       ],
     });
@@ -176,6 +176,7 @@ const updateGroup = async function (req, res) {
         console.log(error);
     }
 };
+
 
 
 const deleteGroup = async function (req, res) {

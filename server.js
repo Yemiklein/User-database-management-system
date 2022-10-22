@@ -4,6 +4,8 @@ const dotenv = require('dotenv').config()
 const cookieParser = require('cookie-parser')
  const db = require('./config/db.config')
  const userRoutes = require ('./Routes/userRoutes')
+ const groupRoutes = require ('./Routes/groupRoutes')
+
 
 //setting up your port
 const PORT = process.env.PORT || 4050
@@ -24,6 +26,7 @@ db.sequelize.sync().then(() => {
 });
     //routes for the user API
 app.use('/api/users', userRoutes)
+app.use('/api/groups', groupRoutes)
 
 //listening to server connection
 app.listen(PORT, () => console.log(`Server is connected on 🪐🚀 ${PORT}`))

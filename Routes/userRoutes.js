@@ -1,30 +1,29 @@
 //importing modules
 const express = require('express')
 const userController = require('../Controllers/userController')
-const { signup, login, findUser, deleteUser, findAllUsers, regGroup} = userController
+const { signup, login, findUser, deleteUser, findAllUsers} = userController
 // const userAuth = require('../Middlewares/userAuth')
 const auth = require('../Middlewares/auth')
+
 
 
 const router = express.Router()
 
 //signup endpoint
 //passing the middleware function to the signup
-router.post('/signup', signup)
+router.post('/signup',  signup)
 
-//login route
+
 router.post('/login', login )
 
-//getUser route
-router.get('/findUser/:id', findUser) 
 
-//deleteUser route
-router.delete('/deleteUser/:id', deleteUser)
-
-//findAllUsers route
-router.get('/findAllUsers', findAllUsers)
+router.get('/findUser/:id',  findUser) 
 
 
-router.post('/add-group',auth.user_Auth, regGroup)
+router.delete('/deleteUser/:id',  deleteUser)
+
+
+router.get('/findAllUsers',  findAllUsers)
+
 
 module.exports = router

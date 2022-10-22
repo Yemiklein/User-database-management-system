@@ -2,13 +2,13 @@
 const bcrypt = require("bcrypt");
 const db = require("../config/db.config");
 const jwt = require("jsonwebtoken");
-// const groupModel = require("../Models/groupModel");
+const groupModel = require("../Models/groupModel");
 // const roleModel = require("../Models/roleModel");
 
 // Assigning users to the variable User
 const User = db.users;
-// const Group = db.groups;
-// const Role = db.roles;
+const Group = db.groups;
+const Role = db.roles;
 
 //signing a user up
 //hashing users password before its saved to the database with bcrypt
@@ -162,5 +162,4 @@ module.exports = {
   findUser,
   deleteUser,
   findAllUsers,
-  regGroup,
 };

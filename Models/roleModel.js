@@ -34,6 +34,16 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: true,
       }
     );
+
+    Role.associate = function(models) {
+      // associations can be defined here
+      Role.belongsTo(models.User, {
+        foreignKey: 'userId',
+        as: 'author'
+      });
+    };
+
+
     return Role;
   };
   

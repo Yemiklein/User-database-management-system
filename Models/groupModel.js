@@ -34,6 +34,14 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: true,
       }
     );
+    Group.associate = function(models) {
+      // associations can be defined here
+      Group.belongsTo(models.User, {
+        foreignKey: 'groupId',
+        as: 'groups',
+        onDelete: 'CASCADE',
+      });
+    };
     return Group;
   };
   

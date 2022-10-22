@@ -36,7 +36,7 @@ const signup = async (req, res) => {
       //res.cookie("jwt", token, { maxAge: 1 * 24 * 60 * 60, httpOnly: true });
       console.log("user", JSON.stringify(user, null, 2));
       console.log(token);
-      //send users details
+      //json users details
       return res.status(201).json({ user });
     } else {
       return res.status(409).json({ msg: "Details are not correct" });
@@ -44,7 +44,7 @@ const signup = async (req, res) => {
   } catch (error) {
     return res
       .status(500)
-      .send({
+      .json({
         error: error.message,
         status: "failed",
         msg: "User registration failed",
@@ -75,11 +75,11 @@ const login = async (req, res) => {
         //if password matches with the one in the database
         //go ahead and generate a cookie for the user
 
-        //send user data
+        //json user data
         return res.status(201).json({ msg: "login successful", user, token });
-        //    return res.status(201).send(user);
+        //    return res.status(201).json(user);
       } else {
-        return res.status(401).send("Authentication failed");
+        return res.status(401).json("Authentication failed");
       }
     }
   } catch (error) {
@@ -102,9 +102,9 @@ const findUser = async (req, res) => {
       ],
     });
     if (user) {
-      return res.status(200).send(user);
+      return res.status(200).json(user);
     } else {
-      return res.status(404).send("User not found");
+      return res.status(404).json("User not found");
     }
   } catch (error) {
     console.log(error);
@@ -120,9 +120,9 @@ const findAllUsers = async (req, res) => {
   try {
     const users = await User.findAll();
     if (users) {
-      return res.status(200).send(users);
+      return res.status(200).json(users);
     } else {
-      return res.status(404).send("No user found");
+      return res.status(404).json("No user found");
     }
   } catch (error) {
     console.log(error);
@@ -134,79 +134,24 @@ const deleteUser = async (req, res) => {
     const user = await User.findOne({ where: { id: req.user.id } });
     if (user) {
       await user.destroy();
-      return res.status(200).send("User deleted");
+      return res.status(200).json("User deleted");
     } else {
-      return res.status(404).send("User not found");
+      return res.status(404).json("User not found");
     }
   } catch (error) {
     console.log(error);
   }
 };
 
-const regGroup = async function (req, res) {
-  try {
-    const userId = req.user.id;
-    const { mavericks, peer, squad } = req.body;
-    const data = { userId, mavericks, peer, squad };
-    //saving the user
-    const group = await Group.create(data);
-
-    if (group) {
-      return res.status(200).send(group);
-    } else {
-      return res.status(404).send("User not found");
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const updateGroup = async function (req, res) {
-    try {
-        const userId = req.user.id;
-        const { mavericks, peer, squad } = req.body;
-        const data = { userId, mavericks, peer, squad };
-        const group = await Group.update(data, { where: { userId: userId } });
-        if (group) {
-            return res.status(200).send(group);
-        } else {
-            return res.status(404).send("User not found");
-        }
-    } catch (error) {
-        console.log(error);
-    }
-};
 
 
 
-const deleteGroup = async function (req, res) {
-    try {
-        const userId = req.user.id;
-        const group = await Group.findOne({ where: { userId: userId } });
-        if (group) {
-            await group.destroy();
-            return res.status(200).send("Group deleted");
-        } else {
-            return res.status(404).send("Group not found");
-        }
-    } catch (error) {
-        console.log(error);
-    }
-};
 
 
-const getAllGroups = async function (req, res) {
-    try {
-        const groups = await Group.findAll();
-        if (groups) {
-            return res.status(200).send(groups);
-        } else {
-            return res.status(404).send("No group found");
-        }
-    } catch (error) {
-        console.log(error);
-    }
-};
+
+
+
+
 
 
 

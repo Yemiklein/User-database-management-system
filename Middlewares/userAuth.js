@@ -16,7 +16,7 @@ const db = require("../config/db.config");
    });
    //if username exist in the database respond with a status of 409
    if (username) {
-     return res.json(409).send("username already taken");
+     return res.json(409).json("username already taken");
    }
 
    //checking if email already exist

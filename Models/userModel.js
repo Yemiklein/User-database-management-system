@@ -1,4 +1,4 @@
-
+const Group = require("./groupModel").Group;
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(

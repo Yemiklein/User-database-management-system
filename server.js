@@ -28,7 +28,7 @@ db.sequelize.sync({ }).then(() => {
 });
     //routes for the user API
 app.use('/api/users', userRoutes)
-app.use('/api/groups', groupRoutes)
+app.use('/groups', groupRoutes)
 
 //listening to server connection
 app.listen(PORT, () => console.log(`Server is connected on 🪐🚀 ${PORT}`))

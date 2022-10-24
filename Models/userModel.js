@@ -1,6 +1,3 @@
-const { groups } = require("../config/db.config");
-
-const Group = require("./groupModel").Group;
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
@@ -73,10 +70,11 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       groupId: {
-        type: DataTypes.UUIDV4,
+        type: DataTypes.INTEGER,
         allowNull: false,
         foreignKey: true,
-        
+        autoIncrement: true,
+
    
       },
         

@@ -4,22 +4,27 @@ module.exports = (sequelize, DataTypes) => {
     const Role = sequelize.define(
       "Role",
       {
-        roleId: {
+       id: {
           type: DataTypes.UUID,
           defaultValue: DataTypes.UUIDV4,
           primaryKey: true,
+          autoIncrement: true,
         },
-        userId: {
+        groupId: {
             type: DataTypes.STRING,
               allowNull: false,
             foreignKey: true,
           },
-        isAdmin: {
-          type: DataTypes.BOOLEAN,
-          allowNull: true,
+        roleName: {
+          type: DataTypes.STRING,
+          allowNull: false,
           unique: true,
-
         },
+        roleDescription: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          unique: true,
+    },
         isSuperAdmin: {
           type: DataTypes.BOOLEAN,
           allowNull: true,
@@ -33,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Role.associate = function(models) {
      
-      Role.belongsToMany(models.User, { foreignKey: 'userId', as: 'user'});
+      Role.hasMany(models.User, { foreignKey: 'userId', as: 'user'});
     };
     return Role;
   };

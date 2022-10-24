@@ -1,4 +1,4 @@
-const User = require("./userModel").User;
+// const User = require("./userModel").User;
 
 module.exports = (sequelize, DataTypes) => {
     const Group = sequelize.define(
@@ -14,21 +14,15 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
           foreignKey: true,
         },
-        peer: {
+        groupName: {
           type: DataTypes.STRING,
-            allowNull: true,
-          unique: true,
-         
-        },
-        mavericks: {
-          type: DataTypes.STRING,
-          allowNull: true,
+          allowNull: false,
           unique: true,
 
         },
-        squad: {
+        groupDescription: {
           type: DataTypes.STRING,
-          allowNull: true,
+          allowNull: false,
           unique: true,
         },
       },
@@ -37,11 +31,8 @@ module.exports = (sequelize, DataTypes) => {
       }
     );
     Group.associate = function(models) {
-      Group.hasMany(models.User, {
-        foreignKey: 'groupId',
-        as: 'member',
-        onDelete: 'CASCADE',
-      });
+      Group.hasMany(models.Role, {foreignKey: 'groupId', as: 'member', onDelete: 'CASCADE'});;
+    Role.belongsTo(models.Group, {foreignKey: 'groupId', as: 'group'});
     };
     return Group;
   };

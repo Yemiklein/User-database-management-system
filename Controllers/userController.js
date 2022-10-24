@@ -2,8 +2,11 @@
 const bcrypt = require("bcrypt");
 const db = require("../config/db.config");
 const jwt = require("jsonwebtoken");
-const groupModel = require("../Models/groupModel");
-// const roleModel = require("../Models/roleModel");
+// const User = require("../models/user");
+// const User = model.user;
+// const Group = model.group;
+// const Role = model.role;
+
 
 // Assigning users to the variable User
 const User = db.users;

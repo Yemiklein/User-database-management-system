@@ -3,7 +3,7 @@ const express = require('express')
 const userController = require('../Controllers/userController')
 const { signup, login, findUser, deleteUser, findAllUsers} = userController
 // const userAuth = require('../Middlewares/userAuth')
-const auth = require('../Middlewares/auth')
+// const auth = require('../Middlewares/auth')
 
 
 

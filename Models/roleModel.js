@@ -14,20 +14,14 @@ module.exports = (sequelize, DataTypes) => {
               allowNull: false,
             foreignKey: true,
           },
-        basic: {
-          type: DataTypes.STRING,
+        isAdmin: {
+          type: DataTypes.BOOLEAN,
           allowNull: true,
           unique: true,
 
         },
-        admin: {
-          type: DataTypes.STRING,
-          allowNull: true,
-          unique: true,
-
-        },
-        superAdmin: {
-          type: DataTypes.STRING,
+        isSuperAdmin: {
+          type: DataTypes.BOOLEAN,
           allowNull: true,
           unique: true,
         },
@@ -38,14 +32,9 @@ module.exports = (sequelize, DataTypes) => {
     );
 
     Role.associate = function(models) {
-      // associations can be defined here
-      Role.belongsTo(models.User, {
-        foreignKey: 'userId',
-        as: 'author'
-      });
+     
+      Role.belongsToMany(models.User, { foreignKey: 'userId', as: 'user'});
     };
-
-
     return Role;
   };
   

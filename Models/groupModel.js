@@ -37,10 +37,9 @@ module.exports = (sequelize, DataTypes) => {
       }
     );
     Group.associate = function(models) {
-      // associations can be defined here
-      Group.belongsTo(models.User, {
+      Group.hasMany(models.User, {
         foreignKey: 'groupId',
-        as: 'groups',
+        as: 'member',
         onDelete: 'CASCADE',
       });
     };

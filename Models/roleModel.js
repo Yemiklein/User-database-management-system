@@ -1,4 +1,4 @@
-const Role = require("./roleModel").Role;
+// const Role = require("./roleModel").Role;
 
 module.exports = (sequelize, DataTypes) => {
     const Role = sequelize.define(

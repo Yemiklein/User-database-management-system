@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser')
 const db = require('./config/db.config')
  const userRoutes = require ('./Routes/userRoutes')
  const groupRoutes = require ('./Routes/groupRoutes')
+ 
 
 
 //setting up your port

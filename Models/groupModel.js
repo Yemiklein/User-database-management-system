@@ -1,4 +1,4 @@
-// const User = require("./userModel").User;
+const Role = require("./roleModel").User;
 
 module.exports = (sequelize, DataTypes) => {
     const Group = sequelize.define(

@@ -22,5 +22,6 @@ db.users = require('../Models/userModel') (sequelize, DataTypes)
 db.groups = require('../Models/groupModel') (sequelize, DataTypes)
 db.roles = require('../Models/roleModel') (sequelize, DataTypes)
 
+
 //exporting the module
 module.exports = db

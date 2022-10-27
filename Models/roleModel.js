@@ -1,4 +1,4 @@
-// const Role = require("./roleModel").Role;
+const Group = require("./groupModel").Group;
 
 module.exports = (sequelize, DataTypes) => {
     const Role = sequelize.define(
@@ -23,12 +23,10 @@ module.exports = (sequelize, DataTypes) => {
         roleDescription: {
           type: DataTypes.STRING,
           allowNull: false,
-          unique: true,
     },
         isSuperAdmin: {
           type: DataTypes.BOOLEAN,
-          allowNull: true,
-          unique: true,
+          allowNull: false,
         },
       },
       {
@@ -37,8 +35,8 @@ module.exports = (sequelize, DataTypes) => {
     );
 
     Role.associate = function(models) {
-     
-      Role.hasMany(models.User, { foreignKey: 'userId', as: 'user'});
+      Role.belongsTo(models.Group, {foreignKey: 'groupId', as: 'group', onDelete: 'CASCADE'});
+ Group.hasMany(models.Role, {foreignKey: 'groupId', as: 'member', onDelete: 'CASCADE'});
     };
     return Role;
   };

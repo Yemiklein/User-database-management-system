@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser')
 const db = require('./config/db.config')
  const userRoutes = require ('./Routes/userRoutes')
  const groupRoutes = require ('./Routes/groupRoutes')
- 
+   
 
 
 //setting up your port
@@ -23,7 +23,7 @@ app.use(cookieParser())
 
 //synchronizing the database and forcing it to false so we dont lose data
 
-db.sequelize.sync({ }).then(() => {
+db.sequelize.sync({force:true}).then(() => {
     console.log('Database connected 🎊')
    
 });

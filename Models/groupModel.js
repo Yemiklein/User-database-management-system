@@ -23,7 +23,6 @@ module.exports = (sequelize, DataTypes) => {
         groupDescription: {
           type: DataTypes.STRING,
           allowNull: false,
-          unique: true,
         },
       },
       {
@@ -31,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     );
     Group.associate = function(models) {
-      Group.hasMany(models.Role, {foreignKey: 'groupId', as: 'member', onDelete: 'CASCADE'});;
+      Group.hasMany(models.Role, {foreignKey: 'groupId', as: 'member', onDelete: 'CASCADE'});
     Role.belongsTo(models.Group, {foreignKey: 'groupId', as: 'group'});
     };
     return Group;
